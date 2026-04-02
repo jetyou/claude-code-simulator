@@ -1,5 +1,7 @@
 # Claude Simulator 🐱
 
+[English](README.md) | [中文](README_CN.md)
+
 **The ultimate slacking tool for pretending to "vibe code" at work!** 
 
 A CLI tool that simulates Claude Code running, generating random tool calls and outputs to create the illusion of productive coding. Perfect for looking busy while doing absolutely nothing. Your boss will think you're deep in AI-assisted development, but you're just watching the pretty output scroll by.
@@ -26,8 +28,8 @@ A CLI tool that simulates Claude Code running, generating random tool calls and 
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/claude-simulator.git
-cd claude-simulator
+git clone https://github.com/jetyou/claude-code-simulator.git
+cd claude-code-simulator
 
 # Install dependencies
 npm install
@@ -156,7 +158,7 @@ npm run dev
 
 ## License
 
-MIT
+[MIT License](LICENSE) © 2026
 
 ## Disclaimer
 

@@ -1,5 +1,7 @@
 # Claude Simulator 🐱
 
+[English](README.md) | [中文](README_CN.md)
+
 **上班假装 vibe coding 的终极摸鱼神器！**
 
 一个模拟 Claude Code 运行的 CLI 工具，生成随机工具调用和输出，营造"AI 辅助编程"的假象。让你在老板眼中是全公司最努力的开发者，实际上你只是在看漂亮的代码滚动。同事路过时纷纷感叹："哇，他正在用 AI 重构代码，太专业了！"
@@ -26,8 +28,8 @@
 
 ```bash
 # 克隆仓库
-git clone https://github.com/yourusername/claude-simulator.git
-cd claude-simulator
+git clone https://github.com/jetyou/claude-code-simulator.git
+cd claude-code-simulator
 
 # 安装依赖
 npm install
@@ -156,7 +158,7 @@ npm run dev
 
 ## 许可证
 
-MIT
+[MIT License](LICENSE) © 2026
 
 ## 免责声明
 
