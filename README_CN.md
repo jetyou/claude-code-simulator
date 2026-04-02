@@ -14,7 +14,7 @@
 - 📊 **响应式布局** - 自动适配终端宽度（宽屏双栏模式，窄屏紧凑模式），摸鱼不分屏幕大小
 - 🔧 **工具模拟** - 生成真实的 Read/Edit/Bash/Grep/Glob/Write 操作。老板问你忙啥？就说"AI 正在帮我重构核心模块"
 - 🎨 **差异高亮** - 绿色背景显示新增代码，红色背景显示删除代码。"看，我在优化代码质量！"
-- 🐱 **猫咪伴侣** - ASCII 艺术猫咪 logo（▗ ▗ ▖ ▖ / ▘▘ ▝▝），氛围感拉满
+- 🐱 **猫咪伴侣** - ASCII 艺术猫咪 logo（/\_/\ ( o.o ) > ^ <），氛围感拉满
 - ⌨️ **交互命令** - 支持 start、stop、pause、resume 控制你的"开发进度"
 
 ## 安装
@@ -57,7 +57,7 @@ claude-simulator
 | `start` | 开始氛围编程模拟 |
 | `stop` | 暂停模拟 |
 | `resume` | 暂停后继续 |
-| `quit` / `exit` | 退出程序 |
+| `exit` | 退出程序 |
 | `help` | 显示可用命令 |
 | `clear` | 清空输出区域 |
 
@@ -74,8 +74,8 @@ claude-simulator
 │                                           │ Tips for getting started     │
 │       Welcome to Claude Simulator!        │ Type "start" to begin vibe c │
 │                                           │ ──────────────────────────── │
-│                 ▗ ▗   ▖ ▖                 │ Recent activity              │
-│                   ▘▘ ▝▝                   │ No recent activity           │
+│                 /\_/\                   │ Recent activity              │
+│                ( o.o )                  │ No recent activity           │
 │                                           │                              │
 │      claude-sonnet-4-6 · Vibe Coding      │                              │
 │ ~/…/workspace_dev/claude-code-simulator   │                              │
@@ -89,8 +89,9 @@ claude-simulator
 
               Welcome to Claude Simulator!
 
-                     ▗ ▗   ▖ ▖
-                       ▘▘ ▝▝
+                     /\_/\  
+                    ( o.o ) 
+                     > ^ <
 
             claude-sonnet-4-6 · Vibe Coding
     ~/.openclaw/workspace_dev/claude-code-simulator

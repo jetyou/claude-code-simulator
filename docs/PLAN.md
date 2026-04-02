@@ -18,7 +18,7 @@
 | Tool Simulation | ✅ | Read, Edit, Bash, Grep, Glob, Write operations |
 | Diff Rendering | ✅ | Green/red background for code changes |
 | Streaming Output | ✅ | Character-by-character display |
-| Input Commands | ✅ | start, stop, resume, quit, help, clear |
+| Input Commands | ✅ | start, stop, resume, exit, help, clear |
 | Progress Stats | ✅ | Files read, modified, commands run |
 | Footer Status | ✅ | Permission mode, keyboard hints |
 | Resize Handling | ✅ | Real-time responsive (no debounce) |

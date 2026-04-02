@@ -32,7 +32,7 @@ claude-simulator   # After npm link
 | `start` | Begin vibe coding simulation |
 | `stop` | Pause simulation |
 | `resume` | Continue after pause |
-| `quit` / `exit` | Exit application |
+| `exit` | Exit application |
 | `help` | Show commands |
 | `clear` | Clear output |
 
@@ -140,7 +140,7 @@ src/
 ✅ Works on macOS/Linux
 ✅ Smooth responsive layout
 ✅ Realistic tool call sequences
-✅ Proper pause/resume/quit
+✅ Proper pause/resume/exit
 ✅ < 50MB memory usage
 
 ---

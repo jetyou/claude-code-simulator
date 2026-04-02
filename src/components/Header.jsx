@@ -227,8 +227,9 @@ function Header({ columns }) {
         <Text> </Text>
         <Text bold>{center(truncatedWelcome)}</Text>
         <Text> </Text>
-        <Text color="magenta">{center('▗ ▗   ▖ ▖')}</Text>
-        <Text color="magenta">{center('  ▘▘ ▝▝  ')}</Text>
+        <Text color="magenta">{center('  /\_/\  ')}</Text>
+        <Text color="magenta">{center(' ( o.o ) ')}</Text>
+        <Text color="magenta">{center('> ^ <')}</Text>
         <Text> </Text>
         <Text dimColor>{center(truncatedModel)}</Text>
         <Text dimColor>{center(truncatedCwd)}</Text>
@@ -304,7 +305,7 @@ function Header({ columns }) {
       <Box flexDirection="row">
         <Text color="magenta">│</Text>
         <Box width={leftColWidth} justifyContent="center">
-          <Text color="magenta">▗ ▗   ▖ ▖</Text>
+          <Text color="magenta">  /\_/\  </Text>
         </Box>
         <Text color="magenta">│</Text>
         <Box width={rightColWidth}>
@@ -317,11 +318,24 @@ function Header({ columns }) {
       <Box flexDirection="row">
         <Text color="magenta">│</Text>
         <Box width={leftColWidth} justifyContent="center">
-          <Text color="magenta">  ▘▘ ▝▝  </Text>
+          <Text color="magenta"> ( o.o ) </Text>
         </Box>
         <Text color="magenta">│</Text>
         <Box width={rightColWidth}>
           <Text dimColor> No recent activity</Text>
+        </Box>
+        <Text color="magenta">│</Text>
+      </Box>
+
+      {/* Cat logo row 3 */}
+      <Box flexDirection="row">
+        <Text color="magenta">│</Text>
+        <Box width={leftColWidth} justifyContent="center">
+          <Text color="magenta">{'> ^ <'}</Text>
+        </Box>
+        <Text color="magenta">│</Text>
+        <Box width={rightColWidth}>
+          <Text> </Text>
         </Box>
         <Text color="magenta">│</Text>
       </Box>

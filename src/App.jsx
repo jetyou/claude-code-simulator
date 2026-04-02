@@ -11,7 +11,7 @@ import Header from './components/Header.jsx';
 import { SimulatorEngine } from './engine/SimulatorEngine.jsx';
 import { useSimulatorState } from './hooks/useSimulatorState.jsx';
 
-const IDLE_PROMPT = 'Type "start" to begin, "quit" to exit...';
+const IDLE_PROMPT = 'Type "start" to begin, "exit" to leave...';
 
 function App() {
   const { exit } = useApp();
@@ -163,7 +163,7 @@ function App() {
       });
       addOutput({
         type: 'system',
-        content: '  quit    - Exit simulator',
+        content: '  exit    - Exit simulator',
       });
     } else {
       addOutput({
@@ -176,7 +176,7 @@ function App() {
       });
       addOutput({
         type: 'system',
-        content: '  quit    - Exit simulator',
+        content: '  exit    - Exit simulator',
       });
     }
     addOutput({
@@ -194,7 +194,7 @@ function App() {
     const trimmed = text.trim().toLowerCase();
 
     // Quit command - always available
-    if (trimmed === 'quit' || trimmed === 'exit' || trimmed === '退出') {
+    if (trimmed === 'exit' || trimmed === '退出') {
       if (isSimulating) {
         showSummaryAndExit();
       } else {
@@ -266,7 +266,7 @@ function App() {
 
   // Placeholder text
   const placeholder = isSimulating
-    ? 'Type a command (stop/resume/quit/help)...'
+    ? 'Type a command (stop/resume/exit/help)...'
     : IDLE_PROMPT;
 
   return (

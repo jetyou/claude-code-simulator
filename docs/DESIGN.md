@@ -37,7 +37,7 @@ App
 ├── Header (responsive: horizontal/compact)
 │   ├── Title border
 │   ├── Welcome message
-│   ├── Cat logo (▗ ▗ ▖ ▖ / ▘▘ ▝▝)
+│   ├── Cat logo (/\_/\ ( o.o ) > ^ <)
 │   ├── Model info
 │   └── CWD path
 ├── OutputArea (scrollable)
@@ -78,7 +78,7 @@ function App() {
     if (text === 'start') startSimulation();
     if (text === 'stop') pauseSimulation();
     if (text === 'resume') resumeSimulation();
-    if (text === 'quit') showSummaryAndExit();
+    if (text === 'exit') showSummaryAndExit();
   };
 }
 ```

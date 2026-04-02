@@ -14,7 +14,7 @@ A CLI tool that simulates Claude Code running, generating random tool calls and 
 - 📊 **Responsive Layout** - Adapts to terminal width (horizontal mode for wide terminals, compact mode for narrow)
 - 🔧 **Tool Simulation** - Generates realistic Read/Edit/Bash/Grep/Glob/Write operations that look like real work
 - 🎨 **Diff Highlighting** - Shows code changes with green/red backgrounds. "Look boss, I'm refactoring!"
-- 🐱 **Cat Companion** - ASCII art cat logo (▗ ▗ ▖ ▖ / ▘▘ ▝▝) for maximum vibes
+- 🐱 **Cat Companion** - ASCII art cat logo (/\_/\ ( o.o ) > ^ <) for maximum vibes
 - ⌨️ **Interactive Commands** - Start, stop, pause, and resume your "coding session"
 
 ## Installation
@@ -57,7 +57,7 @@ claude-simulator
 | `start` | Begin the vibe coding simulation |
 | `stop` | Pause the simulation |
 | `resume` | Continue after pausing |
-| `quit` / `exit` | Exit the application |
+| `exit` | Exit the application |
 | `help` | Show available commands |
 | `clear` | Clear the output area |
 
@@ -74,8 +74,8 @@ claude-simulator
 │                                           │ Tips for getting started     │
 │       Welcome to Claude Simulator!        │ Type "start" to begin vibe c │
 │                                           │ ──────────────────────────── │
-│                 ▗ ▗   ▖ ▖                 │ Recent activity              │
-│                   ▘▘ ▝▝                   │ No recent activity           │
+│                 /\_/\                   │ Recent activity              │
+│                ( o.o )                  │ No recent activity           │
 │                                           │                              │
 │      claude-sonnet-4-6 · Vibe Coding      │                              │
 │ ~/…/workspace_dev/claude-code-simulator   │                              │
@@ -89,8 +89,9 @@ claude-simulator
 
               Welcome to Claude Simulator!
 
-                     ▗ ▗   ▖ ▖
-                       ▘▘ ▝▝
+                     /\_/\  
+                    ( o.o ) 
+                     > ^ <
 
             claude-sonnet-4-6 · Vibe Coding
     ~/.openclaw/workspace_dev/claude-code-simulator
