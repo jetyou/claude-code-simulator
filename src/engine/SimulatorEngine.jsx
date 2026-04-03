@@ -2,12 +2,14 @@ import { FileTree } from '../models/FileTree.jsx';
 import { ToolGenerator } from '../generators/ToolGenerator.jsx';
 import { CodeGenerator } from '../generators/CodeGenerator.jsx';
 import { CommentGenerator } from '../generators/CommentGenerator.jsx';
+import { pickComment, getReactionEmoji } from '../models/BuddyData.jsx';
 
 export class SimulatorEngine {
   constructor(options = {}) {
     this.onOutput = options.onOutput || (() => {});
     this.onStatsUpdate = options.onStatsUpdate || (() => {});
     this.onBuddyComment = options.onBuddyComment || (() => {});
+    this.personality = options.personality || null;
 
     this.fileTree = new FileTree('react');
     this.toolGenerator = new ToolGenerator();
@@ -23,6 +25,10 @@ export class SimulatorEngine {
 
     this.started = false;
     this.initialPromptShown = false;
+  }
+
+  setPersonality(personality) {
+    this.personality = personality;
   }
 
   start() {
@@ -62,6 +68,32 @@ export class SimulatorEngine {
     // Update stats
     this.updateStats(toolCall);
 
+    // Personality-driven buddy reactions (chaos stat increases frequency)
+    const chaosBonus = this.personality ? (this.personality.chaos || 5) / 30 : 0;
+    if (Math.random() < 0.2 + chaosBonus) {
+      const eventMap = {
+        'Read': 'read',
+        'Edit': 'edit',
+        'Write': 'edit',
+        'Bash': 'bash',
+        'Error': 'error',
+      };
+      const eventType = eventMap[toolCall.type];
+      if (eventType && this.personality) {
+        const comment = pickComment(eventType, this.personality);
+        const emoji = getReactionEmoji(eventType);
+        if (comment) this.onBuddyComment(comment, emoji);
+      }
+    }
+
+    // High ops idle yawn
+    if (this.stats.totalOps > 50 && this.stats.totalOps % 20 === 0 && Math.random() < 0.5) {
+      const comment = this.personality
+        ? pickComment('idle', this.personality)
+        : '*yawn*';
+      this.onBuddyComment(comment, '💤');
+    }
+
     // Occasionally show a comment
     if (Math.random() < 0.15) {
       const comment = this.commentGenerator.next();
@@ -69,6 +101,10 @@ export class SimulatorEngine {
         type: 'comment',
         content: comment,
       });
+      // Optionally have Buddy say it too
+      if (Math.random() < 0.3) {
+        this.onBuddyComment(comment, '💭');
+      }
     }
 
     // Show progress every 10 ops

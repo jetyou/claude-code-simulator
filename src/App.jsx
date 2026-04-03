@@ -10,8 +10,9 @@ import Spinner from './components/Spinner.jsx';
 import Header from './components/Header.jsx';
 import { SimulatorEngine } from './engine/SimulatorEngine.jsx';
 import { useSimulatorState } from './hooks/useSimulatorState.jsx';
+import { pickComment, getReactionEmoji } from './models/BuddyData.jsx';
 
-const IDLE_PROMPT = 'Type "start" to begin, "exit" to leave...';
+const IDLE_PROMPT = 'Type "/start" to begin, "/exit" to leave...';
 
 function App() {
   const { exit } = useApp();
@@ -61,25 +62,46 @@ function App() {
   const {
     outputs,
     stats,
-    buddyComment,
+    buddyState,
+    buddyProfile,
+    showBuddyCard,
+    showBuddyHearts,
     addOutput,
     clearBuddyComment,
+    showBuddyComment,
     updateStats,
     clearOutputs,
+    hatchBuddy,
+    toggleBuddyCard,
+    petBuddy,
+    hideBuddy,
+    unhideBuddy,
   } = useSimulatorState();
+
+  // Auto-hatch buddy on mount
+  useEffect(() => {
+    hatchBuddy('simulator-default-user');
+  }, []);
 
   // Initialize simulator engine
   useEffect(() => {
     engineRef.current = new SimulatorEngine({
       onOutput: addOutput,
       onStatsUpdate: updateStats,
-      onBuddyComment: (comment) => {},
+      onBuddyComment: showBuddyComment,
     });
 
     return () => {
       engineRef.current?.stop();
     };
   }, []);
+
+  // Sync buddy personality to engine
+  useEffect(() => {
+    if (buddyProfile && engineRef.current) {
+      engineRef.current.setPersonality(buddyProfile.personality);
+    }
+  }, [buddyProfile]);
 
   // Run simulation loop - uses refs to properly handle state changes
   useEffect(() => {
@@ -159,33 +181,53 @@ function App() {
     if (!isSimulating) {
       addOutput({
         type: 'system',
-        content: '  start   - Start vibe coding simulation',
+        content: '  /start      - Start vibe coding simulation',
       });
       addOutput({
         type: 'system',
-        content: '  exit    - Exit simulator',
+        content: '  /exit       - Exit simulator',
       });
     } else {
       addOutput({
         type: 'system',
-        content: '  stop    - Pause simulation',
+        content: '  /stop       - Pause simulation',
       });
       addOutput({
         type: 'system',
-        content: '  resume  - Resume simulation',
+        content: '  /resume     - Resume simulation',
       });
       addOutput({
         type: 'system',
-        content: '  exit    - Exit simulator',
+        content: '  /exit       - Exit simulator',
       });
     }
     addOutput({
       type: 'system',
-      content: '  help    - Show this help',
+      content: '  /help       - Show this help',
     });
     addOutput({
       type: 'system',
-      content: '  clear   - Clear output',
+      content: '  /clear      - Clear output',
+    });
+    addOutput({
+      type: 'system',
+      content: '  /buddy      - Hatch/show your buddy',
+    });
+    addOutput({
+      type: 'system',
+      content: '  /buddy pet  - Pet your buddy',
+    });
+    addOutput({
+      type: 'system',
+      content: '  /buddy card - Show buddy stats card',
+    });
+    addOutput({
+      type: 'system',
+      content: '  /buddy off  - Hide buddy',
+    });
+    addOutput({
+      type: 'system',
+      content: '  /buddy on   - Show buddy',
     });
   }, [addOutput, isSimulating]);
 
@@ -194,7 +236,7 @@ function App() {
     const trimmed = text.trim().toLowerCase();
 
     // Quit command - always available
-    if (trimmed === 'exit' || trimmed === '退出') {
+    if (trimmed === '/exit' || trimmed === '/退出') {
       if (isSimulating) {
         showSummaryAndExit();
       } else {
@@ -205,46 +247,71 @@ function App() {
     }
 
     // Help command - always available
-    if (trimmed === 'help' || trimmed === '帮助') {
+    if (trimmed === '/help' || trimmed === '/帮助') {
       showHelp();
       setInput('');
       return;
     }
 
     // Start command - only when not simulating
-    if ((trimmed === 'start' || trimmed === '开始') && !isSimulating) {
+    if ((trimmed === '/start' || trimmed === '/开始') && !isSimulating) {
       startSimulation();
       setInput('');
       return;
     }
 
     // Commands below only work when simulating
-    if (!isSimulating) {
-      setInput('');
-      return;
+    if (isSimulating) {
+      // Stop/pause command
+      if (trimmed === '/stop' || trimmed === '/停止') {
+        isPausedRef.current = true;
+        setIsPaused(true);
+        showBuddyComment('Taking a break?', '😺');
+        addOutput({
+          type: 'system',
+          content: '⏸️ Paused. Type "/resume" to continue.',
+        });
+      } else if (trimmed === '/resume' || trimmed === '/继续') {
+        isPausedRef.current = false;
+        setIsPaused(false);
+        addOutput({
+          type: 'system',
+          content: '▶️ Resumed...',
+        });
+      } else if (trimmed === '/clear' || trimmed === '/清屏') {
+        clearOutputs();
+      }
     }
 
-    // Stop/pause command
-    if (trimmed === 'stop' || trimmed === '停止') {
-      isPausedRef.current = true;
-      setIsPaused(true);
-      addOutput({
-        type: 'system',
-        content: '⏸️ Paused. Type "resume" to continue.',
-      });
-    } else if (trimmed === 'resume' || trimmed === '继续') {
-      isPausedRef.current = false;
-      setIsPaused(false);
-      addOutput({
-        type: 'system',
-        content: '▶️ Resumed...',
-      });
-    } else if (trimmed === 'clear' || trimmed === '清屏') {
-      clearOutputs();
+    // /buddy commands — available at any time
+    if (trimmed === '/buddy' || trimmed === 'buddy') {
+      if (!buddyProfile) {
+        const profile = hatchBuddy('simulator-default-user');
+        addOutput({ type: 'system', content: `🥚 Hatching your buddy...` });
+        addOutput({ type: 'system', content: `🎉 Meet ${profile.name}! (${profile.species.name} · ${profile.rarity.name})` });
+      } else {
+        addOutput({ type: 'system', content: `Your buddy: ${buddyProfile.name} (${buddyProfile.species.name} · ${buddyProfile.rarity.name})` });
+      }
+    } else if (trimmed === '/buddy pet' || trimmed === 'pet' || trimmed === '摸猫') {
+      if (buddyProfile) {
+        petBuddy();
+        const comment = pickComment('pet', buddyProfile.personality);
+        showBuddyComment(comment, '❤️');
+      }
+    } else if (trimmed === '/buddy card') {
+      if (buddyProfile) {
+        toggleBuddyCard();
+      }
+    } else if (trimmed === '/buddy off') {
+      hideBuddy();
+      addOutput({ type: 'system', content: '👋 Buddy hidden. Type "/buddy on" to bring them back.' });
+    } else if (trimmed === '/buddy on') {
+      unhideBuddy();
+      addOutput({ type: 'system', content: '🐾 Buddy is back!' });
     }
 
     setInput('');
-  }, [isSimulating, exit, addOutput, clearOutputs, startSimulation, showSummaryAndExit, showHelp]);
+  }, [isSimulating, exit, addOutput, clearOutputs, startSimulation, showSummaryAndExit, showHelp, buddyProfile, hatchBuddy, petBuddy, toggleBuddyCard, hideBuddy, unhideBuddy, showBuddyComment]);
 
   // Global key handler
   useInput((input, key) => {
@@ -266,62 +333,76 @@ function App() {
 
   // Placeholder text
   const placeholder = isSimulating
-    ? 'Type a command (stop/resume/exit/help)...'
+    ? 'Type a command (/stop, /resume, /exit, /help)...'
     : IDLE_PROMPT;
 
   return (
     <Box flexDirection="column" height="100%">
-      {/* Header */}
-      <Header isSimulating={isSimulating} columns={terminalWidth} />
-
-      {/* Output area */}
-      <Box flexGrow={1} flexDirection="column" paddingX={2} overflow="hidden">
-        <OutputArea outputs={outputs} />
+      {/* Header - flexShrink=0 prevents Ink from clipping rows when terminal is short */}
+      <Box flexShrink={0}>
+        <Header isSimulating={isSimulating} columns={terminalWidth} />
       </Box>
 
-      {/* Spinner (when simulating) */}
-      {isSimulating && (
-        <Box paddingX={2}>
-          <Spinner
-            mode={spinnerMode}
-            loadingStartTimeRef={loadingStartTimeRef}
+      {/* Main Row */}
+      <Box flexGrow={1} flexDirection="row">
+        {/* Left Column (90%) */}
+        <Box flexDirection="column" width="90%" flexGrow={1}>
+          {/* Output area */}
+          <Box flexGrow={1} flexDirection="column" paddingX={2} overflow="hidden">
+            <OutputArea outputs={outputs} />
+          </Box>
+
+          {/* Spinner (when simulating) */}
+          {isSimulating && (
+            <Box paddingX={2}>
+              <Spinner
+                mode={spinnerMode}
+                loadingStartTimeRef={loadingStartTimeRef}
+              />
+            </Box>
+          )}
+
+          {/* Input area with border */}
+          <Box
+            borderStyle="round"
+            borderColor="gray"
+            borderLeft={false}
+            borderRight={false}
+            paddingX={2}
+          >
+            <TextInput
+              value={input}
+              onChange={setInput}
+              onSubmit={handleSubmit}
+              placeholder={placeholder}
+              focus={true}
+            />
+          </Box>
+
+          {/* Footer */}
+          <Footer
+            stats={stats}
+            isPaused={isPaused}
+            isLoading={isSimulating && !isPaused}
+            isSimulating={isSimulating}
+            permissionMode="acceptEdits"
           />
         </Box>
-      )}
 
-      {/* Input area with border */}
-      <Box
-        borderStyle="round"
-        borderColor="gray"
-        borderLeft={false}
-        borderRight={false}
-        paddingX={2}
-      >
-        <TextInput
-          value={input}
-          onChange={setInput}
-          onSubmit={handleSubmit}
-          placeholder={placeholder}
-          focus={true}
-        />
+        {/* Right Column (Buddy) (10%) */}
+        {buddyProfile && buddyProfile.isVisible !== false && (
+          <Box width="10%" flexDirection="column" justifyContent="flex-end" alignItems="center">
+            <Buddy
+              profile={buddyProfile}
+              comment={buddyState.comment}
+              reaction={buddyState.reaction}
+              onHide={clearBuddyComment}
+              showCard={showBuddyCard}
+              showHearts={showBuddyHearts}
+            />
+          </Box>
+        )}
       </Box>
-
-      {/* Footer */}
-      <Footer
-        stats={stats}
-        isPaused={isPaused}
-        isLoading={isSimulating && !isPaused}
-        isSimulating={isSimulating}
-        permissionMode="acceptEdits"
-      />
-
-      {/* Buddy */}
-      {buddyComment && (
-        <Buddy
-          comment={buddyComment}
-          onHide={clearBuddyComment}
-        />
-      )}
     </Box>
   );
 }

@@ -6,7 +6,7 @@
 
 A CLI tool that simulates Claude Code running, generating random tool calls and outputs to create the illusion of productive coding. Perfect for looking busy while doing absolutely nothing. Your boss will think you're deep in AI-assisted development, but you're just watching the pretty output scroll by.
 
-![Demo](docs/ui.jpeg)
+![Demo](docs/demo.gif)
 
 ## Features
 
@@ -14,8 +14,8 @@ A CLI tool that simulates Claude Code running, generating random tool calls and 
 - 📊 **Responsive Layout** - Adapts to terminal width (horizontal mode for wide terminals, compact mode for narrow)
 - 🔧 **Tool Simulation** - Generates realistic Read/Edit/Bash/Grep/Glob/Write operations that look like real work
 - 🎨 **Diff Highlighting** - Shows code changes with green/red backgrounds. "Look boss, I'm refactoring!"
-- 🐱 **Cat Companion** - ASCII art cat logo (/\_/\ ( o.o ) > ^ <) for maximum vibes
-- ⌨️ **Interactive Commands** - Start, stop, pause, and resume your "coding session"
+- 🐱 **Buddy Pet Companion** - High-fidelity Tamagotchi-style pet with 6 species, 5 rarity tiers, distinct personalities, and interactive commands for maximum vibes
+- ⌨️ **Interactive Commands** - /start, /stop, /resume, /exit, and /buddy to control your "coding session"
 
 ## Installation
 
@@ -54,12 +54,17 @@ claude-simulator
 
 | Command | Description |
 |---------|-------------|
-| `start` | Begin the vibe coding simulation |
-| `stop` | Pause the simulation |
-| `resume` | Continue after pausing |
-| `exit` | Exit the application |
-| `help` | Show available commands |
-| `clear` | Clear the output area |
+| `/start` | Begin the vibe coding simulation |
+| `/stop` | Pause the simulation |
+| `/resume` | Continue after pausing |
+| `/exit` | Exit the application |
+| `/help` | Show available commands |
+| `/clear` | Clear the output area |
+| `/buddy` | Hatch/show your buddy |
+| `/buddy pet` | Pet your buddy |
+| `/buddy card` | Show buddy stats card |
+| `/buddy off` | Hide buddy from display |
+| `/buddy on` | Re-show hidden buddy |
 
 ### Keyboard Shortcuts
 
@@ -72,7 +77,7 @@ claude-simulator
 ```
 ╭─── Claude Simulator v1.0.0 ──────────────────────────────────────────────╮
 │                                           │ Tips for getting started     │
-│       Welcome to Claude Simulator!        │ Type "start" to begin vibe c │
+│       Welcome to Claude Simulator!        │ Type "/start" to begin vibe  │
 │                                           │ ──────────────────────────── │
 │                 /\_/\                   │ Recent activity              │
 │                ( o.o )                  │ No recent activity           │
@@ -102,7 +107,7 @@ claude-simulator
 ## Example Session
 
 ```
-> start
+> /start
 
 ✓ Read src/components/Header.tsx
   → 156 lines, React component

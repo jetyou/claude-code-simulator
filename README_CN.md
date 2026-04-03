@@ -6,7 +6,7 @@
 
 一个模拟 Claude Code 运行的 CLI 工具，生成随机工具调用和输出，营造"AI 辅助编程"的假象。让你在老板眼中是全公司最努力的开发者，实际上你只是在看漂亮的代码滚动。同事路过时纷纷感叹："哇，他正在用 AI 重构代码，太专业了！"
 
-![Demo](docs/ui.jpeg)
+![Demo](docs/demo.gif)
 
 ## 功能特点
 
@@ -14,8 +14,8 @@
 - 📊 **响应式布局** - 自动适配终端宽度（宽屏双栏模式，窄屏紧凑模式），摸鱼不分屏幕大小
 - 🔧 **工具模拟** - 生成真实的 Read/Edit/Bash/Grep/Glob/Write 操作。老板问你忙啥？就说"AI 正在帮我重构核心模块"
 - 🎨 **差异高亮** - 绿色背景显示新增代码，红色背景显示删除代码。"看，我在优化代码质量！"
-- 🐱 **猫咪伴侣** - ASCII 艺术猫咪 logo（/\_/\ ( o.o ) > ^ <），氛围感拉满
-- ⌨️ **交互命令** - 支持 start、stop、pause、resume 控制你的"开发进度"
+- 🐱 **伴侣宠物 (Buddy)** - 高仿 Claude Code 的电子宠物伴侣，拥有 6 种物种、5 种稀有度、独立的性格属性和互动命令，氛围感拉满
+- ⌨️ **交互命令** - 支持 `/start`、`/stop`、`/resume`、`/buddy` 控制你的"开发进度"
 
 ## 安装
 
@@ -54,12 +54,17 @@ claude-simulator
 
 | 命令 | 说明 |
 |------|------|
-| `start` | 开始氛围编程模拟 |
-| `stop` | 暂停模拟 |
-| `resume` | 暂停后继续 |
-| `exit` | 退出程序 |
-| `help` | 显示可用命令 |
-| `clear` | 清空输出区域 |
+| `/start` | 开始氛围编程模拟 |
+| `/stop` | 暂停模拟 |
+| `/resume` | 暂停后继续 |
+| `/exit` | 退出程序 |
+| `/help` | 显示可用命令 |
+| `/clear` | 清空输出区域 |
+| `/buddy` | 召唤/显示你的伴侣 |
+| `/buddy pet` | 抚摸你的伴侣 |
+| `/buddy card` | 显示伴侣的属性卡片 |
+| `/buddy off` | 隐藏伴侣 |
+| `/buddy on` | 重新显示伴侣 |
 
 ### 快捷键
 
@@ -72,7 +77,7 @@ claude-simulator
 ```
 ╭─── Claude Simulator v1.0.0 ──────────────────────────────────────────────╮
 │                                           │ Tips for getting started     │
-│       Welcome to Claude Simulator!        │ Type "start" to begin vibe c │
+│       Welcome to Claude Simulator!        │ Type "/start" to begin vibe  │
 │                                           │ ──────────────────────────── │
 │                 /\_/\                   │ Recent activity              │
 │                ( o.o )                  │ No recent activity           │
@@ -99,10 +104,10 @@ claude-simulator
 ╰──────────────────────────────────────────────────────╯
 ```
 
-## 示例会话
+## 运行示例
 
 ```
-> start
+> /start
 
 ✓ Read src/components/Header.tsx
   → 156 lines, React component

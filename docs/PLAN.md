@@ -18,7 +18,7 @@
 | Tool Simulation | ✅ | Read, Edit, Bash, Grep, Glob, Write operations |
 | Diff Rendering | ✅ | Green/red background for code changes |
 | Streaming Output | ✅ | Character-by-character display |
-| Input Commands | ✅ | start, stop, resume, exit, help, clear |
+| Input Commands | ✅ | /start, /stop, /resume, /exit, /help, /clear |
 | Progress Stats | ✅ | Files read, modified, commands run |
 | Footer Status | ✅ | Permission mode, keyboard hints |
 | Resize Handling | ✅ | Real-time responsive (no debounce) |
@@ -49,19 +49,20 @@ src/
 
 ---
 
-## v1.1.0 - Buddy Pet (Next)
+## v1.1.0 - Buddy Pet (Completed) ✅
 
 ### Priority: High
 
-**Theme: 增加猫咪伴侣互动功能**
+**Theme: 高仿 Claude Code 伴侣互动功能 (Tamagotchi-style)**
 
 | Feature | Status | Description |
 |---------|--------|-------------|
-| Buddy Display | 🔲 | Show cat companion in corner |
-| Speech Bubbles | 🔲 | Random comments from buddy |
-| Reactions | 🔲 | React to tool calls (happy/confused/working) |
-| Animation | 🔲 | Idle animations, blink, tail wag |
-| Interaction | 🔲 | Pet the cat, get responses |
+| Deterministic Gen | ✅ | Hash from user ID for persistent identity |
+| Species & Art | ✅ | 6 species (cat, duck, owl, dragon, ghost, blob), 5-line ASCII |
+| Rarity & Hats | ✅ | 5 tiers (Common to Legendary), colors + hat overlays |
+| Personality Stats | ✅ | Debugging, Patience, Chaos, Wisdom, Snark |
+| Speech Bubbles | ✅ | Personality-driven comments on events |
+| Commands | ✅ | `/buddy`, `/buddy pet`, `/buddy card`, `/buddy off` |
 
 ### Buddy Features Detail
 
@@ -72,30 +73,29 @@ src/
 │    → Added useMemo optimization                         │
 │                                                          │
 │  ┌────────────────────┐                                 │
-│  │  Great progress!   │                                 │
-│  │      🐱            │                                 │
-│  └────────────────────┘                                 │
-│                                                          │
+│  │  A wise refactor!  │        👑                       │
+│  │      💬            │      /\_/\                      │
+│  └────────────────────┘     ( o.o )                     │
+│                              > ^ <                      │
+│                             /|   |\                     │
+│                            (_|   |_)                    │
+│                            Stack the Wise               │
 ╰──────────────────────────────────────────────────────────╯
 ```
 
-### Buddy Reactions
+### Buddy Reactions & Personality
 
-| Event | Reaction | Comment |
-|-------|----------|---------|
-| File read | 👀 | "Let me see..." |
-| Edit success | 😸 | "Nice fix!" |
-| Bash test pass | 🎉 | "Tests passing!" |
-| Error | 😿 | "Oops, let me fix that..." |
-| Long operation | 💤 | *yawn* |
-| User pause | 😺 | "Taking a break?" |
+- **Event-Driven**: Reacts to `/start` loops (Read, Edit, Bash, Error, Idle).
+- **Chaos influence**: High chaos stat increases reaction frequency.
+- **Dominant Trait**: Determines the pool of comments (e.g., Snark uses sarcastic comments).
+- **Interactions**: `/buddy pet` triggers hearts (❤️) and purr responses.
 
-### Technical Requirements
+### Technical Requirements Implemented
 
-- ASCII art cat sprite (multiple frames)
-- Speech bubble component with auto-hide
-- Event-driven reaction system
-- Random comment generator for buddy
+- `BuddyData.jsx`: Data model (FNV-1a hash + Mulberry32 PRNG), species registry
+- `Buddy.jsx`: Component with 5-line art, rarity coloring, stats card view
+- `App.jsx`: Full slash command parser including the `/buddy` suite
+- `SimulatorEngine.jsx`: Personality-aware commentary dispatcher
 
 ---
 
@@ -117,7 +117,7 @@ src/
 | Issue | Status | Fix Target |
 |-------|--------|------------|
 | Raw mode error in non-TTY | Known | Document limitation |
-| Buddy not implemented | Planned | v1.1.0 |
+| Layout truncates some text | Fixed | Added `flexShrink={0}` in App.jsx |
 
 ---
 
@@ -138,19 +138,32 @@ src/
 - Claude Code's exact layout algorithm
 - No-debounce resize for flicker-free updates
 
+### v1.1.0 (2026-04-03)
+
+**New Features:**
+- Added high-fidelity Tamagotchi-style Buddy Pet
+- 6 deterministic species with 5 rarity tiers, personality stats, and item overlays (hats)
+- Implemented `/buddy`, `/buddy pet`, `/buddy card`, `/buddy off/on` commands
+- All standard commands (`start`, `exit`, etc.) now changed to use `/` prefix (`/start`)
+- Personality-aware event commentary system
+
+**Technical:**
+- Implemented `FNV-1a` + `Mulberry32` for deterministic account-based buddy generation
+
 ---
 
 ## Development Roadmap
 
 ```
 2026-04 ──────────────────────────────────────────────►
+2026-04 ──────────────────────────────────────────────►
          │
          ├─ v1.0.0 ✅ MVP Complete
          │
-         └─ v1.1.0 🔲 Buddy Pet Feature
+         └─ v1.1.0 ✅ Buddy Pet Feature (High Fidelity)
 ```
 
 ---
 
-**Last Updated**: 2026-04-02
+**Last Updated**: 2026-04-03
 **Maintainer**: Claude Simulator Team
